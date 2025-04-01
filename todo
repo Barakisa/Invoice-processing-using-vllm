@@ -1,0 +1,4 @@
+- [ ] create directories for new images, so you wouldnt need to delete previous files after usage
+- [ ] save output together with pdf name for future reference
+- [ ] forgid llm to output non-alphanumeric characters
+- [ ] Support images as the first input

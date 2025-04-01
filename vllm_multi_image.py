@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 
 from pdf_processor import process_pdf
 from message_builder import build_user_message, build_system_message
+from utils import save_response
 
 
 
@@ -44,9 +45,9 @@ def main():
     # open api doesnt accept pdf files, only images
     images = process_pdf(file_path)
     response = call_openai_client(images)
+    save_response(response, pdf_file_name)
     
-    
-    print("Chat completion output:", response)
+    print("Chat completion output: \n", response)
 
     
 
