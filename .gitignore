@@ -5,3 +5,4 @@ server_params.txt
 .env
 .conda
 invoices/*
+__pycache__/
