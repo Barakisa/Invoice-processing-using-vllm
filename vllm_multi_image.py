@@ -6,7 +6,7 @@ import os
 from dotenv import load_dotenv
 
 from pdf_processor import process_pdf
-from message_builder import build_user_message
+from message_builder import build_user_message, build_system_message
 
 
 
@@ -18,6 +18,7 @@ def call_openai_client(images):
 
     # there is a specific message format
     # jinja is applied on the message format
+    system_message = build_system_message()
     user_message = build_user_message(images)
     
     # TODO implement user message
@@ -25,7 +26,7 @@ def call_openai_client(images):
 
     chat_response = client.chat.completions.create(
         model="Qwen/Qwen2-VL-7B-Instruct",
-        messages=[user_message],
+        messages=[system_message, user_message],
     )
     return chat_response.choices[0].message.content
     
