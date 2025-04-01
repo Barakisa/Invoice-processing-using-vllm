@@ -23,7 +23,7 @@ def call_openai_client(images):
     # system_message = build_system_message()
     chat_response = client.chat.completions.create(
         model="Qwen/Qwen2-VL-7B-Instruct",
-        messages=[user_message],
+        messages=[system_message, user_message],
     )
     return chat_response.choices[0].message.content
     
