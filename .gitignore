@@ -6,3 +6,4 @@ server_params.txt
 .conda
 pdf/*
 __pycache__
+.vscode
