@@ -2,6 +2,7 @@ from openai import OpenAI
 import sys
 import cv2
 import base64
+from dotenv import load_dotenv
 
 if len(sys.argv) < 2:
     print("Usage: python vllm_1image.py <1-4>")
@@ -25,8 +26,8 @@ match x:
         image_url = "file:///home/barakisa/Programming/ai/vllm/invoice-1319568.png"
 
 
-openai_api_key = "EMPTY"
-openai_api_base = "http://192.168.1.220:8000/v1"
+openai_api_key = os.getenv("API_KEY")
+openai_api_base = os.getenv("API_BASE")
 
 client = OpenAI(
     api_key=openai_api_key,

@@ -2,3 +2,6 @@ png/*
 *.log
 *.zip
 server_params.txt
+.env
+.conda
+invoices/*
