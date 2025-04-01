@@ -1,7 +1,5 @@
 from openai import OpenAI
 import sys
-import cv2
-import base64
 import os
 from dotenv import load_dotenv
 
@@ -23,27 +21,28 @@ def call_openai_client(images):
     
     # TODO implement user message
     # system_message = build_system_message()
-
     chat_response = client.chat.completions.create(
         model="Qwen/Qwen2-VL-7B-Instruct",
-        messages=[system_message, user_message],
+        messages=[user_message],
     )
     return chat_response.choices[0].message.content
     
 def main():
     load_dotenv()
     if len(sys.argv) < 2:
-        print("Usage: python main.py <pdf_file>")
-        sys.exit(1)
+        print("Usage: python main.py <pdf_file>. Using default file.")
+        pdf_file_name = os.getenv("DEFAULT_FILE_NAME")
+    else:
+        pdf_file_name = sys.argv[1]
     
-    pdf_file_name = sys.argv[1]
-    if not os.path.isfile(os.getenv("PDF_DIR") + pdf_file_name):
+    file_path = os.getenv("PDF_DIR") + pdf_file_name
+    if not os.path.isfile(file_path):
         print("Error: File not found.")
         sys.exit(1)
     
     # its necessary to convert pdf to png (or other image formats)
     # open api doesnt accept pdf files, only images
-    images = process_pdf(pdf_file_name)
+    images = process_pdf(file_path)
     response = call_openai_client(images)
     
     

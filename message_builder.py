@@ -1,6 +1,5 @@
 import base64
 import cv2
-from dotenv import load_dotenv
 
 
 # dynamically build content entries for open ai api
@@ -32,7 +31,7 @@ def build_user_text_content(images):
     # Analize image {i} or Whats in image {i}
     text = ""
     for i, _ in enumerate(images):
-        text+=f"Whats in image {i}? "
+        text+=f"Whats in image {i+1}? "
 
     # NOTE: The prompt formatting with the image token `<image>` is not needed
     # since the prompt will be processed automatically by the API server.        
@@ -42,8 +41,10 @@ def build_user_text_content(images):
 def build_user_message(images):
     user_text_content = build_user_text_content(images)
     user_image_content = build_user_image_content(images)
+    
     user_message_content = user_text_content + user_image_content
-    message = {"role": "user", "content": [user_message_content]}
+    
+    message = {"role": "user", "content": user_message_content}
     return message
 
 def build_system_message():

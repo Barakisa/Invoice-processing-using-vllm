@@ -4,5 +4,5 @@ png/*
 server_params.txt
 .env
 .conda
-invoices/*
-__pycache__/
+pdf/*
+__pycache__
