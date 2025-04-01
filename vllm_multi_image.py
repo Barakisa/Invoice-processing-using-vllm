@@ -1,41 +1,12 @@
-from openai import OpenAI
 import sys
 import os
-from dotenv import load_dotenv
-
 from pdf_processor import process_pdf
-from message_builder import build_user_message, build_system_message
-from utils import save_response
+from utils import save_response, parse_arguments, remove_markdown_json_tags, log_response_raw
+from api_client import call_api_client
 
-
-
-def call_openai_client(images):
-    client = OpenAI(
-        api_key=os.getenv("API_KEY"),
-        base_url=os.getenv("API_BASE"),
-    )
-
-    # there is a specific message format
-    # jinja is applied on the message format
-    system_message = build_system_message()
-    user_message = build_user_message(images)
-    
-    # TODO implement user message
-    # system_message = build_system_message()
-    chat_response = client.chat.completions.create(
-        model="Qwen/Qwen2-VL-7B-Instruct",
-        messages=[system_message, user_message],
-    )
-    return chat_response.choices[0].message.content
     
 def main():
-    load_dotenv()
-    if len(sys.argv) < 2:
-        print("Usage: python main.py <pdf_file>. Using default file.")
-        pdf_file_name = os.getenv("DEFAULT_FILE_NAME")
-    else:
-        pdf_file_name = sys.argv[1]
-    
+    [pdf_file_name, model_name] = parse_arguments(sys.argv)
     file_path = os.getenv("PDF_DIR") + pdf_file_name
     if not os.path.isfile(file_path):
         print("Error: File not found.")
@@ -44,10 +15,14 @@ def main():
     # its necessary to convert pdf to png (or other image formats)
     # open api doesnt accept pdf files, only images
     images = process_pdf(file_path)
-    response = call_openai_client(images)
-    save_response(response, pdf_file_name)
+    response_raw = call_api_client(images, model_name)
+    response_json = remove_markdown_json_tags(response_raw)
+    # save response in .txt dir
+    # and then (inside described how) log the resopnse in one big log
+    save_response(response_json, pdf_file_name)
+    log_response_raw(response_raw)
     
-    print("Chat completion output: \n", response)
+    print("Chat completion output: \n", response_json)
 
     
 

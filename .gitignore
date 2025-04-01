@@ -7,3 +7,4 @@ server_params.txt
 pdf/*
 __pycache__
 .vscode
+logs
