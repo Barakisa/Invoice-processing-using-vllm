@@ -45,4 +45,6 @@ def build_user_message(images):
     user_message_content = user_text_content + user_image_content
     message = {"role": "user", "content": [user_message_content]}
     return message
-    
+
+def build_system_message():
+    return {"role": "system", "content": [{"type": "text", "text": "You are a master accountant, and your job is to parse images to determine invoice id, invoice date, invoice sub-total, invoice total tax, invoice total (subtotal + tax), invoice items (item description, item qty, item unit price, item tax (if applicable), item price). You love json format, and you hate explaining things, which means, that you return only the data in json format, completely bare from anything else."}]}

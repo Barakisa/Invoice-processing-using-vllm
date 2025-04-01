@@ -6,7 +6,7 @@ import os
 from dotenv import load_dotenv
 
 from pdf_processor import process_pdf
-from message_builder import build_user_message, build_system_message
+from message_builder import build_user_message
 
 
 
