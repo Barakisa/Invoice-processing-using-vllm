@@ -1,0 +1,65 @@
+{%- set system_prompt = '<|system|>' %}
+{%- set user_prompt = '<|user|>' %}
+{%- set assistant_prompt = '<|assistant|>' %}
+{%- set prompt_suffix = '<|end|>' %}
+
+
+{%- if tools %}
+    {{- system_prompt }}
+    {%- if messages[0]['role'] == 'system' %}
+        {{- messages[0]['content'] }}
+    {%- else %}
+        {{- 'You are a helpful assistant with some tools.' }}
+    {%- endif %}
+    {%- for tool in tools %}
+        {{- "<|tool|>" }}
+        {{- tool | tojson }}
+        {{- "<|/tool|>" }}
+    {%- endfor %}
+    {{- prompt_suffix }}
+{%- else %}
+    {%- if messages[0]['role'] == 'system' %}
+        {{- system_prompt + messages[0]['content'] + prompt_suffix }}
+    {%- else %}
+        {{- system_prompt + 'You are a helpful assistant.' + prompt_suffix }}
+    {%- endif %}
+{%- endif %}
+{%- for message in messages %}
+    {%- if (message.role == "user")%}
+        {%- set image_line = '' %}
+
+        {{- user_prompt + '<|image_1|>' + message.content + prompt_suffix }}
+    {%- elif (message.role == "system" and not loop.first) %}
+        {{- system_prompt + message.content + prompt_suffix }}
+    {%- elif (message.role == "assistant" and not message.tool_calls) %}
+        {{- assistant_prompt + message.content + prompt_suffix}}
+    {%- elif message.role == "assistant" %}
+        {{- assistant_prompt }}
+        {%- if message.content %}
+            {{- message.content }}
+        {%- endif %}
+        {%- for tool_call in message.tool_calls %}
+            {%- if tool_call.function is defined %}
+                {%- set tool_call = tool_call.function %}
+            {%- endif %}
+            {{- '\n<tool_call>\n{"name": "' }}
+            {{- tool_call.name }}
+            {{- '", "arguments": ' }}
+            {{- tool_call.arguments | tojson }}
+            {{- '}\n</tool_call>' }}
+        {%- endfor %}
+        {{- prompt_suffix }}
+    {%- elif message.role == "tool" %}
+        {%- if (loop.index0 == 0) or (messages[loop.index0 - 1].role != "tool") %}
+            {{- user_prompt }}
+        {%- endif %}
+        {{- '\n<tool_response>\n' }}
+        {{- message.content }}
+        {{- '\n</tool_response>' }}
+        {%- if loop.last or (messages[loop.index0 + 1].role != "tool") %}
+            {{- prompt_suffix }}
+        {%- endif %}
+    {%- endif %}
+{%- endfor %}
+{{- assistant_prompt }}
+

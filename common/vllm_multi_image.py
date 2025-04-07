@@ -20,7 +20,7 @@ def main():
     # save response in .txt dir
     # and then (inside described how) log the resopnse in one big log
     save_response(response_json, pdf_file_name)
-    log_response_raw(response_raw)
+    log_response_raw(response_raw, model_name)
     
     print("Chat completion output: \n", response_json)
 

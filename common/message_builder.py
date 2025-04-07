@@ -31,7 +31,7 @@ def build_user_text_content(images):
     # Analize image {i} or Whats in image {i}
     text = ""
     for i, _ in enumerate(images):
-        text+=f"Whats in image {i+1}? "
+        text+=f"Parse image {i+1}? "
 
     # NOTE: The prompt formatting with the image token `<image>` is not needed
     # since the prompt will be processed automatically by the API server.        

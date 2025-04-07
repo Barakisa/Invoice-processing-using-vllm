@@ -1,0 +1,6 @@
+{%- set image_line = '' %}
+{%- for content_line in message.content%}
+    {%- if (content_line.type == "image_url") %}
+        {%- set image_line = image_line + '<|image_' + loop.index +'|>'%}
+    {%- endif%}
+{%- endfor%}
