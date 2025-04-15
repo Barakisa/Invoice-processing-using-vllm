@@ -1,0 +1,17 @@
+{
+  "identifier": "@local:discrepancy-checker-10",
+  "name": "Discrepancy-checker-1.0",
+  "changed": false,
+  "description": "",
+  "operation": {
+    "fields": [
+      {
+        "key": "llm.prediction.systemPrompt",
+        "value": "can you give me discrepancies between these two parses? In the format of {\"discrepancies\":[{\"item1\":\"item1Name\", \"parse1\":\"parse1Item1Value\", \"parse2\":\"parse2Item1Value\"}]}"
+      }
+    ]
+  },
+  "load": {
+    "fields": []
+  }
+}

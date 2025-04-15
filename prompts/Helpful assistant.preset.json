@@ -1,0 +1,17 @@
+{
+  "identifier": "@local:helpful-assistant",
+  "name": "Helpful-assistant",
+  "changed": false,
+  "description": "",
+  "operation": {
+    "fields": [
+      {
+        "key": "llm.prediction.systemPrompt",
+        "value": "you are a helpful assistant"
+      }
+    ]
+  },
+  "load": {
+    "fields": []
+  }
+}

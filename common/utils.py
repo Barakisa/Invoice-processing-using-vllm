@@ -2,6 +2,8 @@ import ntpath
 import sys
 import os
 from dotenv import load_dotenv
+import json
+
 
 def path_leaf(path):
     head, tail = ntpath.split(path)
@@ -35,3 +37,39 @@ def parse_arguments(args):
 
 def remove_markdown_json_tags(text):
     return text.replace("```json", "").replace("```", "")
+
+
+def combine_prompt_and_template(system_prompt_file, json_template_file):
+    try:
+        with open(system_prompt_file, 'r') as f:
+            system_prompt = f.read()
+        
+        with open(json_template_file, 'r') as f:
+            template = json.load(f)  # Load JSON directly
+
+        combined_string = (
+            system_prompt + 
+            "\noutput format:\n ```json" + 
+            json.dumps(template, indent=4) + # Use dumps to convert dict to string
+            "\n```"
+        )
+        return combined_string
+
+    except FileNotFoundError:
+        print("Error: One or both files not found.")
+        return ""
+    except json.JSONDecodeError:
+        print("Error: Invalid JSON in template file.")
+        return ""
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        return ""
+
+def get_system_prompt():
+    system_prompt_path = "../prompts/system_prompt.txt"
+    template_path = "../prompts/output_template.json"
+
+    if not all([system_prompt_path, template_path]):
+        raise ValueError("Missing required environment variables")
+
+    return combine_prompt_and_template(system_prompt_path, template_path)

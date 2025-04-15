@@ -1,0 +1,17 @@
+{
+  "identifier": "@local:invoice-parser-10",
+  "name": "Invoice-parser-1.0",
+  "changed": true,
+  "description": "",
+  "operation": {
+    "fields": [
+      {
+        "key": "llm.prediction.systemPrompt",
+        "value": "You are a master accountant. You accurately read  total, subtotal, total tax, line items (descrption, item cost, qty, unit price), invoice id, invoice date from provided images."
+      }
+    ]
+  },
+  "load": {
+    "fields": []
+  }
+}

@@ -1,0 +1,42 @@
+{
+    "basic_data": {
+      "amountDue": 0.0,
+      "billingAddress": "",
+      "billingAddressRecipient": "",
+      "customerAddress": "",
+      "customerAddressRecipient": "",
+      "customerId": "",
+      "customerName": "",
+      "customerTaxId": "",
+      "dueDate": "",
+      "inoviceId": "",
+      "invoiceDate": "",
+      "invoiceTotal": 0.0,
+      "invoiceEndDate": "",
+      "paymentTerms": "",
+      "purchaseOrder": "",
+      "remittanceAddress": "",
+      "remittanceAddressRecipient": "",
+      "serviceAddress": "",
+      "serviceAddressRecipient": "",
+      "shippingAddress": "",
+      "shippingAddressRecipient": "",
+      "subTotal":"",
+      "totalTax":"",
+      "vendorAddress": "",
+      "vendorAddressRecipient": "",
+      "vendorName": "",
+      "vendorTaxId": ""
+    },
+    "items": [
+      {
+        "description": "",
+        "productCode": "",
+        "quantity": 0,
+        "unitPrice": 0.0,
+        "totalTax": 0.0,
+        "toatlAmount": 0.0
+      }
+    ]
+  }
+  
